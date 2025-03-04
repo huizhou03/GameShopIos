@@ -19,53 +19,6 @@ struct PerfilView: View {
     }
 }
 
-//Tienda
-struct TiendaView: View {
-    @State private var productos = [Producto]()
-    var body: some View{
-        NavigationView {
-                        List(productos) { producto in
-                            HStack {
-                                Image(producto.imagen) // Asegúrate de tener las imágenes en tu proyecto
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 80, height: 80)
-                                    .cornerRadius(10)
-                                
-                                VStack(alignment: .leading) {
-                                    Text(producto.nombre)
-                                        .font(.headline)
-                                    Text("$\(producto.precio, specifier: "%.2f")")
-                                        .font(.subheadline)
-                                        .foregroundColor(.green)
-                                }
-                            }
-                            .padding()
-                        }
-                        .navigationTitle("Tienda")
-                }
-        .onAppear {
-            loadProductos()
-        }
-    }
-    func loadProductos() {
-
-            guard let url = Bundle.main.url(forResource: "productos", withExtension: "json") else {
-                print("No se pudo encontrar el archivo JSON.")
-                return
-            }
-            
-            do {
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                let decodedProductos = try decoder.decode([Producto].self, from: data)
-                self.productos = decodedProductos
-            } catch {
-                print("Error al decodificar el JSON: \(error)")
-            }
-        }
-}
-
 //Carrito
 struct CarritoView: View {
     var body: some View{
@@ -89,7 +42,6 @@ struct PedidosView: View {
         }
     }
 }
-
 // Esta es la vista principal de la aplicación que contiene el TabView
 struct ContentView: View {
     var body: some View {
