@@ -1,0 +1,189 @@
+{
+   "Productos":[
+       {
+           "id":"1",
+           "nombre":"Super Mario Bros Wonder",
+           "precio":12.99,
+           "descripcion":"Super Mario Bros. Wonder es un juego de plataformas para Switch donde Mario y sus amigos atraviesan niveles llenos de sorpresas y nuevas mecánicas, como las Wonder Flowers. Ofrece jugabilidad cooperativa y un estilo visual fresco.",
+           "imagen":"superMarioBrosWonder",
+           "stock":100
+       },
+       {
+           "id":"2",
+           "nombre":"Biomutant",
+           "precio":36.99,
+           "descripcion":"Biomutant es un juego de acción y rol de mundo abierto donde controlas a un animal mutante en un mundo postapocalíptico. Ofrece combates, exploración y decisiones que afectan el destino del mundo.",
+           "imagen": "biomutant",
+           "stock":100
+       },
+       {
+           "id":"3",
+           "nombre":"Donkey Kong Country",
+           "precio":45.99,
+           "descripcion":"Donkey Kong Country es un juego de plataformas clásico donde Donkey Kong y su compañero Diddy Kong deben atravesar niveles llenos de obstáculos y enemigos para recuperar su reserva de plátanos robada. Destaca por su jugabilidad, gráficos y música icónica.",
+           "imagen": "donkeyKongCountry",
+           "stock": 100
+       },
+       {
+           "id":"4",
+           "nombre":"Detective Pikachu",
+           "precio":49.99,
+           "descripcion":"Detective Pikachu es un juego de aventura y misterio donde Tim Goodman y un Pikachu parlante con dotes de detective investigan la desaparición del padre de Tim. Juntos resuelven casos en Ryme City interrogando testigos, incluidos Pokémon, y resolviendo acertijos.",
+           "imagen":"detectivePikachu",
+           "stock": 100
+       },
+       {
+           "id":"5",
+           "nombre":"Dragones Quest III",
+           "precio":29.99,
+           "descripcion":"Dragon Quest III: The Seeds of Salvation es un RPG clásico donde los jugadores controlan a un héroe en su misión para derrotar al malvado Archfiend Baramos. Con un mundo abierto, un sistema de clases personalizable y combates por turnos, es una de las entregas más icónicas de la saga, influyendo en muchos RPG posteriores.",
+           "imagen":"dragonesIII",
+           "stock":100
+       },
+       {
+           "id":"6",
+           "nombre":"Matchbox Driving Adventures",
+           "precio":19.99,
+           "descripcion":"Matchbox Driving Adventures es un juego de carreras y exploración basado en la famosa línea de autos de juguete Matchbox. Lanzado para PC en los años 90, permite a los jugadores conducir diversos vehículos en entornos abiertos, completar misiones y superar desafíos en distintos terrenos. Su enfoque es más arcade y accesible, ideal para jugadores jóvenes.",
+           "imagen":"drivingAdventures",
+           "stock":100
+       },
+       {
+           "id":"7",
+           "nombre":"Everybody Switch",
+           "precio":39.99,
+           "descripcion":"En Everybody Switch encontrarás los mejores juegos para Nintendo Switch, desde los últimos lanzamientos hasta clásicos imperdibles. Descubre una amplia selección de títulos para todas las edades y géneros, con precios competitivos y atención especializada. ¡Haz de tu próxima aventura gamer una realidad con nosotros!",
+           "imagen":"everybodySwitch",
+           "stock":100
+       },
+       {
+           "id":"8",
+           "nombre":"Fitness Boxing 3",
+           "precio":19.99,
+           "descripcion":"Fitness Boxing en Nintendo Switch es un juego de ejercicio interactivo que combina rutinas de boxeo con música rítmica. Ofrece entrenamientos guiados por instructores virtuales para mejorar la condición física, quemar calorías y mantenerte en forma de manera divertida.",
+           "imagen":"fitnessBoxing",
+           "stock":100
+       },
+       {
+           "id":"9",
+           "nombre":"Harvestella",
+           "precio":39.99,
+           "descripcion":"Harvestella en Nintendo Switch es un juego de rol y simulación de vida donde cultivas, exploras y combates en un mundo afectado por el fenómeno mágico llamado Quietus. Combina agricultura, aventuras y una narrativa profunda mientras gestionas tu granja y enfrentas desafíos en un entorno cambiante.",
+           "imagen":"harvestella",
+           "stock":100
+       },
+       {
+           "id":"10",
+           "nombre":"Hollow Knight",
+           "precio":39.99,
+           "descripcion":"Hollow Knight en Nintendo Switch es un juego de acción y aventura estilo Metroidvania. Explora un vasto mundo subterráneo lleno de secretos, enemigos desafiantes y jefes épicos. Su atmósfera oscura, diseño artístico detallado y jugabilidad precisa lo convierten en una experiencia única.",
+           "imagen":"hollowKnight",
+           "stock":100
+       },
+       {
+           "id":"11",
+           "nombre":"Just Dance",
+           "precio":49.99,
+           "descripcion":"Just Dance en Nintendo Switch es un juego de baile interactivo donde sigues coreografías al ritmo de éxitos musicales. Ofrece modos para jugar solo o con amigos, con puntuaciones basadas en tus movimientos. Es ideal para divertirse, hacer ejercicio y disfrutar de la música.",
+           "imagen":"justDance",
+           "stock":100
+       },
+       {
+           "id":"12",
+           "nombre":"Kirby y la tierra olvidada",
+           "precio":39.99,
+           "descripcion":"Kirby y la tierra olvidada en Nintendo Switch es un juego de aventuras y plataformas en 3D. Acompaña a Kirby mientras explora un mundo misterioso lleno de ruinas y enemigos, usando sus habilidades de copia para resolver acertijos, combatir y descubrir secretos.",
+           "imagen":"kirby",
+           "stock":100
+       },
+       {
+           "id":"13",
+           "nombre":"Mario VS Donkey Kong",
+           "precio":49.99,
+           "descripcion":"Mario vs. Donkey Kong en Nintendo Switch es un juego de plataformas y rompecabezas. Mario debe rescatar a los Mini-Marios robados por Donkey Kong, resolviendo acertijos en niveles llenos de obstáculos y trampas. Combina estrategia, habilidad y nostalgia en cada desafío.",
+           "imagen":"marioDockerKong",
+           "stock":100
+       },
+       {
+           "id":"14",
+           "nombre":"Mario Party Jamboree",
+           "precio":59.99,
+           "descripcion":"Super Mario Party Jamboree en Nintendo Switch es un juego de fiesta con más de 110 minijuegos y siete tableros temáticos. Ofrece modos competitivos y cooperativos para hasta 20 jugadores, con personajes clásicos como Mario, Luigi y nuevos como Pauline.",
+           "imagen":"marioPartyJamboree",
+           "stock":100
+       },
+       {
+           "id":"15",
+           "nombre":"Mario Party Superstars",
+           "precio":49.99,
+           "descripcion":"Super Mario Party Superstars en Nintendo Switch es un juego de fiesta que reúne tableros clásicos y minijuegos de entregas anteriores de Mario Party. Puedes jugar con amigos en modo local o en línea, disfrutando de divertidos desafíos y competencia en un ambiente colorido y dinámico.",
+           "imagen":"marioPartySuperstars",
+           "stock":100
+       },
+       {
+           "id":"16",
+           "nombre":"Minecraft",
+           "precio":59.99,
+           "descripcion":"Minecraft en Nintendo Switch es un juego de construcción y aventuras donde puedes explorar, recolectar recursos, crear estructuras y sobrevivir en un mundo generado aleatoriamente. Ofrece modos de juego como supervivencia, creativo y multijugador, permitiendo una experiencia flexible y expansiva.",
+           "imagen":"minecraft",
+           "stock":100
+       },
+       {
+           "id":"17",
+           "nombre":"Monster Hunter Rise",
+           "precio":35.99,
+           "descripcion":"Monster Hunter Rise en Nintendo Switch es un juego de acción y aventuras donde los jugadores cazan monstruos gigantes en un mundo abierto. Utilizando diversas armas y estrategias, puedes enfrentarte a criaturas desafiantes solo o en modo cooperativo para obtener materiales y mejorar tu equipo.",
+           "imagen":"monsterHunter",
+           "stock":100
+       },
+       {
+           "id":"18",
+           "nombre":"mySims Cozy Bundle",
+           "precio":49.99,
+           "descripcion":"My Sims Cozy Bundle en Nintendo Switch es una colección de juegos centrados en la simulación y la creación, donde puedes diseñar, decorar y personalizar una ciudad y sus habitantes. Combina actividades como la construcción, la jardinería y la interacción social, ofreciendo una experiencia relajante y divertida.",
+           "imagen":"mysims",
+           "stock":100
+       },
+       {
+           "id":"19",
+           "nombre":"Princess Peach Showtime",
+           "precio":59.99,
+           "descripcion":"Princess Peach: Showtime! en Nintendo Switch es un juego de acción donde la Princesa Peach debe salvar un teatro adoptando diferentes roles, como espadachina y ninja. Cada transformación ofrece habilidades únicas mientras enfrenta a la villana Grape y su banda.",
+           "imagen":"peach",
+           "stock":100
+       },
+       {
+           "id":"20",
+           "nombre":"Pokemon Diamante Brillante",
+           "precio":49.99,
+           "descripcion":"Pokémon Diamante Brillante en Nintendo Switch es un remake del clásico Pokémon Diamante de la Nintendo DS. Los jugadores viajan por la región de Sinnoh, capturan Pokémon, desafían líderes de gimnasio y se enfrentan a la Liga Pokémon, todo con gráficos mejorados y mecánicas modernizadas.",
+           "imagen":"pokemonDiamante",
+           "stock":100
+       },
+       {
+           "id":"21",
+           "nombre":"twoPointCampus",
+           "precio":29.99,
+           "descripcion":"Two Point Campus en Nintendo Switch es un juego de simulación en el que gestionas y diseñas tu propia universidad. Creas aulas, contratas personal y gestionas eventos para hacer crecer la institución, todo mientras enfrentas desafíos y mantienes a los estudiantes felices.",
+           "imagen":"twoPointCampus",
+           "stock":100
+       },
+       {
+           "id":"22",
+           "nombre":"Zelda tears of the kingdom",
+           "precio":35.99,
+           "descripcion":"The Legend of Zelda: Tears of the Kingdom en Nintendo Switch es la secuela de Breath of the Wild. En este juego, Link explora vastas tierras tanto en el suelo como en el cielo, enfrentando nuevos enemigos, resolviendo acertijos y descubriendo secretos para salvar el reino de Hyrule de una nueva amenaza.",
+           "imagen":"zeldaKingdom",
+           "stock":100
+       },
+       {
+           "id":"23",
+           "nombre":"Zelda Links Awakening",
+           "precio":49.99,
+           "descripcion":"The Legend of Zelda: Link's Awakening en Nintendo Switch es un remake del clásico de Game Boy. Link se despierta en la isla Koholint y debe buscar los instrumentos musicales para despertar al Pez del Viento y escapar de la isla. El juego mantiene su esencia con gráficos encantadores en estilo de muñeco de peluche y una jugabilidad clásica de aventuras y puzzles.",
+           "imagen":"zeldaLink",
+           "stock":100
+       }
+   ]
+}
+
