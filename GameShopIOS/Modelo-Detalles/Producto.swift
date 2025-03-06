@@ -13,3 +13,7 @@ struct Producto:Codable, Identifiable{
     let imagen: String
     var stock: Int
 }
+
+struct ProductosResponse: Codable {
+    let Productos: [Producto]
+}

@@ -9,21 +9,15 @@ import Foundation
 
 class GestorDatos: ObservableObject {
     @Published var carrito: [Producto] = []
-    @Published var productosTienda: [Producto] = []
+    @Published var productos = [Producto]()
     
     init() {
         cargarJSONCarrito()
-        cargarJSONProductos()
+        loadProductos()
     }
     
     func obtenerUbicacionBase() -> URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    }
-    
-    func obtenerURLArchivoProductos() -> URL {
-        obtenerUbicacionBase()
-            .appendingPathComponent("productos.json")
-        
     }
     
     func obtenerURLArchivo() -> URL {
@@ -36,7 +30,7 @@ class GestorDatos: ObservableObject {
         print("Ruta del archivo JSON: \(fileUbi.path)")
         
         if !FileManager.default.fileExists(atPath: fileUbi.path) {
-            if let bundleURL = Bundle.main.url(forResource: "carrito", withExtension: "json", subdirectory: "Datos-JSON") {
+            if let bundleURL = Bundle.main.url(forResource: "carrito", withExtension: "json") {
                 do {
                     try FileManager.default.copyItem(at: bundleURL, to: fileUbi)
                 } catch {
@@ -73,31 +67,24 @@ class GestorDatos: ObservableObject {
         guardarDatosJSONCarrito()
     }
     
-    //Funciones para los productos de la tienda
-    func cargarJSONProductos(){
-        let fileUbi = obtenerURLArchivoProductos()
-        print("Ruta del archivo JSON: \(fileUbi.path)")
-        
-        if !FileManager.default.fileExists(atPath: fileUbi.path) {
-            if let bundleURL = Bundle.main.url(forResource: "productos", withExtension: "json", subdirectory: "Datos-JSON") {
-                do {
-                    try FileManager.default.copyItem(at: bundleURL, to: fileUbi)
-                } catch {
-                    print("Error copiando el JSON desde el bundle: \(error)")
-                }
-                print("✅ Archivo encontrado en: \(bundleURL.path)")
-            } else {
-                print("❌ No se encontró el archivo productos.json en Datos-JSON")
-            }
+    //Funcion de la tienda
+    func loadProductos() {
+        guard let url = Bundle.main.url(forResource: "productos", withExtension: "json") else {
+            print("No se pudo encontrar el archivo JSON.")
+            return
         }
+        
         do {
-            let data = try Data(contentsOf: fileUbi)
+            let data = try Data(contentsOf: url)
             let decoder = JSONDecoder()
-            self.productosTienda = try decoder.decode([Producto].self, from: data)
-            print("✅ Productos cargados correctamente: \(self.productosTienda)")
-
+            let decodedProductos = try decoder.decode(ProductosResponse.self, from: data)
+            
+            DispatchQueue.main.async {
+                self.productos = decodedProductos.Productos
+            }
+            
         } catch {
-            print("Error al cargar el JSON: \(error)")
+            print("Error al decodificar el JSON: \(error)")
         }
     }
 }
