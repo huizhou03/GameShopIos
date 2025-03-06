@@ -19,18 +19,6 @@ struct PerfilView: View {
     }
 }
 
-//Carrito
-struct CarritoView: View {
-    var body: some View{
-        NavigationStack{
-            Image(systemName: "person.circle")
-            //...Añadimos código para editar aquí
-            Text("Página de Carrito")
-                .navigationTitle("Carrito")
-        }
-    }
-}
-
 //Pedidos
 struct PedidosView: View {
     var body: some View{

@@ -9,7 +9,6 @@ import SwiftUICore
 import SwiftUI
 struct DetalleProductoView: View {
     var producto: Producto
-    var agregarAlCarrito: (Producto) -> Void
     @StateObject private var gestDatos = GestorDatos()
     @Environment(\.dismiss) var dismiss
 

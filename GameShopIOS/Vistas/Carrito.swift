@@ -1,20 +1,19 @@
 //
-//  Tienda.swift
+//  Carrito.swift
 //  GameShopIOS
 //
-//  Created by Usuario invitado on 4/3/25.
+//  Created by Usuario invitado on 6/3/25.
 //
-//Tienda
+
+//Carrito
 import SwiftUI
 
-struct TiendaView: View {
+struct CarritoView: View {
     @StateObject private var gestDatos = GestorDatos()
-    @State private var productoSeleccionado: Producto? = nil
-    @State private var mostrarSheet = false
     
     var body: some View {
         NavigationView {
-            List(gestDatos.productos) { producto in
+            List(gestDatos.carrito) { producto in
                 HStack {
                     Image(producto.imagen)
                         .resizable()
@@ -31,23 +30,13 @@ struct TiendaView: View {
                     }
                 }
                 .padding()
-                .onTapGesture {
-                    productoSeleccionado = producto
-                    mostrarSheet = true
-                }
             }
-            .sheet(isPresented: $mostrarSheet) {
-                if let producto = productoSeleccionado {
-                    DetalleProductoView(producto: producto)
-                } else {
-                    Text("Cargando...")
-                }
-            }
-            .navigationTitle("Tienda")
+            .navigationTitle("Carrito")
         }
     }
 }
-
 #Preview {
-    TiendaView()
+    CarritoView()
 }
+
+

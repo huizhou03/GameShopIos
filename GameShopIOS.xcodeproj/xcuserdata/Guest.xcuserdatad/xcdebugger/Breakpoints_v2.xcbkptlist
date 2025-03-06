@@ -14,8 +14,8 @@
             filePath = "GameShopIOS/Controlador/Controlador.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "GestorDatos"
             landmarkType = "3">
          </BreakpointContent>
