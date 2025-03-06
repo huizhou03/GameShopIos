@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-//Perfil
+/*//Perfil
 struct PerfilView: View {
     var body: some View{
         NavigationStack{
@@ -17,7 +17,7 @@ struct PerfilView: View {
                 .navigationTitle("Perfil")
         }
     }
-}
+}*/
 
 //Pedidos
 struct PedidosView: View {
@@ -36,18 +36,17 @@ struct ContentView: View {
         //Barra de la parte inferior
         TabView {
             //Cuando hago click en perfil
-            PerfilView()
+            Perfil()
                 .tabItem{
                     Label("Perfil", systemImage: "person.circle")
                 }
-            // tag se utiliza para identificar cada tab de forma única
                 .tag(1)
             
-            TiendaView()
+            /*TiendaView()
                 .tabItem{
                     Label("Tienda", systemImage: "house")
                 }
-                .tag(2)
+                .tag(2)*/
             
             CarritoView()
                 .tabItem{

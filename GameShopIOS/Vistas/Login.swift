@@ -7,21 +7,31 @@
 import SwiftUI
 
 struct Login: View {
-    //Usuarios
-    struct Usuarios: Codable {
+    //JSON
+    struct Usuarios:Codable{
+        let id: String
+        let nombre: String
+        let correo: String
+        let dirPostal: String
+        let newsletter: Bool
+    }
+    
+    //Array
+    struct UsuariosLogin: Codable {
         let usuario: String
         let password: String
     }
     
-    //@Binding var usr: String
     @State var usr: String = ""
     @State var pwd: String = ""
     @State var sesionFallida: Bool = false
     @State var autenticado: Bool = false
     @State private var path = [String]()
-    @State var usuariosArray: [Usuarios] = [
-        Usuarios(usuario: "huizhou.universidad@gmail.com", password: "123456"),
-        Usuarios(usuario: "antonluo15@gmail.com", password: "123456")]
+    
+    //Array
+    @State var usuariosArray: [UsuariosLogin] = [
+        UsuariosLogin(usuario: "huizhou.universidad@gmail.com", password: "123456"),
+        UsuariosLogin(usuario: "antonluo15@gmail.com", password: "123456")]
 
     var body: some View {
         NavigationStack(path: $path){
@@ -107,6 +117,7 @@ struct Login: View {
                 print("Inicio de sesión exitoso para \(usuario.usuario)")
                 autenticado = true
                 sesionFallida = false
+            // Si no se encontró en el array de login, buscar en el array de usuarios con detalles adicionales
             } else {
                 print("Error: Usuario o contraseña incorrectos.")
                 sesionFallida = true
