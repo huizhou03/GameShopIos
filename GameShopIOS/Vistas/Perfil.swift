@@ -5,21 +5,26 @@
 //  Created by Usuario invitado on 6/3/25.
 //
 import SwiftUI
+import PhotosUI
 
 //JSON
 struct PerfilUsuario: Codable{
     var id: String
     var nombre: String
     var correo: String
-    var  CP: String
+    var dirPostal: String
     var newsletter: Bool
 }
 
 struct Perfil: View {
     @State private var imagenPerfil: UIImage? = UIImage(named: "perfilDefecto")
-    @State private var perfilUsuario: PerfilUsuario = PerfilUsuario(id: "", nombre: "", correo: "", CP: "", newsletter: false)
+    @State private var perfilUsuario: PerfilUsuario = PerfilUsuario(id: "", nombre: "", correo: "", dirPostal: "", newsletter: false)
     @State private var mostrarImagen: Bool = false
-    @State var nombre: String = ""
+    
+    /*@State var nombre: String = ""
+    @State var direccionPostal: String = ""
+    @State var correo: String = ""
+    @State var newsletterActivado: Bool = false*/
     
     var body: some View {
         VStack{
@@ -36,8 +41,37 @@ struct Perfil: View {
                     .sheet(isPresented: $mostrarImagen) {
                     ElegirImagen(image: $imagenPerfil)
                     }
+            Form {
+                Section(header: Text("Perfil")){
+                    TextField("Nombre", text: $perfilUsuario.nombre)
+                    TextField("Dirección Postal", text: $perfilUsuario.dirPostal)
+                    TextField("Correo", text: $perfilUsuario.correo)
+                        .disabled(true)
+                }
+                Toggle("Suscribirse a la Newsletter", isOn: $perfilUsuario.newsletter)
                 
-            TextField ("Nombre", text: $nombre)
+                Button(action: cerrarSesion) {
+                    Text("Cerrar sesión").foregroundColor(.red)
+                }
+            }
+            
+            /*TextField ("Nombre", text: $nombre)
+                .font(.headline)
+                .padding()
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(6)
+                .padding(.horizontal, 60)
+                .foregroundStyle(Color.black)
+            
+            TextField ("Dirección Postal", text: $direccionPostal)
+                .font(.headline)
+                .padding()
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(6)
+                .padding(.horizontal, 60)
+                .foregroundStyle(Color.black)
+            
+            TextField ("Correo", text: $correo)
                 .keyboardType(.emailAddress)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
@@ -47,7 +81,39 @@ struct Perfil: View {
                 .cornerRadius(6)
                 .padding(.horizontal, 60)
                 .foregroundStyle(Color.black)
+                .disabled(true)//Email no editable
+            
+            Toggle("Newsletter: ", isOn: $newsletterActivado)
+                .padding(.horizontal, 60)
+            
+            Button("Cerrar sesión", action: cerrarSesion)
+                .padding()
+                .background()
+                .foregroundColor(.white)
+                .cornerRadius(6)*/
             }
+        .navigationTitle("PERFIL")
+        .onAppear(perform: cargarDatosUsuario)
+    }
+    
+    
+    func cargarDatosUsuario() {
+        if let url = Bundle.main.url(forResource: "userData", withExtension: "json"),
+           let data = try? Data(contentsOf: url),
+           let decodedUsers = try? JSONDecoder().decode([String: [PerfilUsuario]].self, from: data),
+           let usuarios = decodedUsers["Usuarios"],
+           let primerUsuario = usuarios.first {
+            
+            /*perfilUsuario = primerUsuario
+            nombre = primerUsuario.nombre
+            direccionPostal = primerUsuario.dirPostal
+            correo = primerUsuario.correo
+            newsletterActivado = primerUsuario.newsletter*/
+        }
+    }
+            
+    func cerrarSesion() {
+            print("Usuario ha cerrado sesión")
         }
     }
                                      
@@ -86,4 +152,57 @@ struct Perfil: View {
 #Preview {
     Perfil()
 }
+/*
+ .padding()
+            .onAppear {
+                // Cargar los usuarios desde el archivo JSON al iniciar la vista
+                cargarUsuarios()
+            }
+ // Método para cargar los usuarios desde el archivo JSON
+ private func cargarUsuarios() {
+     if let url = Bundle.main.url(forResource: "usuarios", withExtension: "json") {
+         do {
+             let data = try Data(contentsOf: url)
+             let decoder = JSONDecoder()
+             let response = try decoder.decode(UsuariosResponse.self, from: data)
+             usuariosDetalles = response.Usuarios
+             print("Usuarios cargados desde el archivo JSON.")
+         } catch {
+             print("Error al cargar el archivo JSON: \(error)")
+         }
+     } else {
+         print("No se encontró el archivo JSON.")
+     }
+ }
 
+ // Método de autenticación
+ private func autenticar() {
+     // Verificar si los campos no están vacíos
+     guard !usr.isEmpty, !pwd.isEmpty else {
+         print("Error: Completa los campos de usuario y contraseña")
+         sesionFallida = true
+         return
+     }
+
+     // Buscar si el usuario existe en el array de usuarios con los detalles cargados desde JSON
+     if let usuario = usuariosDetalles.first(where: { $0.correo == usr }) {
+         // Si el correo coincide, verifica la contraseña (puedes agregar una lógica de contraseña si es necesario)
+         if pwd == "123456" { // Aquí solo es un ejemplo de contraseña
+             print("Inicio de sesión exitoso para \(usuario.nombre)")
+             autenticado = true
+             sesionFallida = false
+         } else {
+             print("Contraseña incorrecta para \(usuario.nombre).")
+             sesionFallida = true
+         }
+     } else {
+         print("Error: Usuario no encontrado.")
+         sesionFallida = true
+     }
+
+     // Mostrar los valores para depuración
+     print("**********")
+     print("Inicio de sesión")
+     print(" 👤 Usuario: \(usr)")
+     print(" 🔑 Contraseña: \(pwd)")
+ }*/

@@ -5,6 +5,9 @@
 //  Created by Usuario invitado on 4/3/25.
 //
 //Tienda
+
+
+/*
 import SwiftUI
 struct TiendaView: View {
     @State private var productos = [Producto]()
@@ -89,4 +92,4 @@ struct TiendaView: View {
 }
 #Preview {
     TiendaView()
-}
+}*/
