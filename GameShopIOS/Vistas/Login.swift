@@ -79,13 +79,13 @@ struct Login: View {
                     EmptyView()
                 }
 
-                // Botón de registro habilitado
+                /*// Botón de registro habilitado
                 NavigationLink(destination: Registro(usuariosArray: $usuariosArray)) {
                     Text("Registrarse")
                         .font(.headline)
                         .foregroundColor(.blue)
                         .padding()
-                }
+                }*/
                 Spacer()
             }
             .padding()

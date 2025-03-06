@@ -5,20 +5,14 @@
             "nombre":"Anton Luo",
             "correo":"antonLuo15@gmail.com",
             "CP":"28996",
-            "newsletter": true,
-            "carrito":[
-                {
-                    
-                }
-            ]
+            "newsletter": true
         },
         {
             "id":"2",
             "nombre":"Hui Zhou",
             "correo":"huizhou.universidad@gmail.com",
             "CP":"28996",
-            "newsletter": false,
-            "carrito":[]
+            "newsletter": false
         }
     ]
 }
