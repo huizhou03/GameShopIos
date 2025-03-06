@@ -1,4 +1,4 @@
-import SwiftUI
+/*import SwiftUI
 
 struct Registro: View {
     @Binding var usuariosArray: [Usuario]
@@ -179,4 +179,4 @@ struct UsuariosData: Codable {
 
 #Preview {
     Registro(usuariosArray: .constant([]))
-}
+}*/

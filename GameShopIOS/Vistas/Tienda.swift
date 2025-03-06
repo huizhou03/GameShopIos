@@ -7,12 +7,12 @@
 //Tienda
 import SwiftUI
 struct TiendaView: View {
-    @StateObject private var gestDatos = GestorDatos()
+    @State private var productos = [Producto]()
     @State private var productoSeleccionado: Producto? = nil
     @State private var mostrarSheet = false
     var body: some View{
         NavigationView {
-            List(gestDatos.productosTienda) { producto in
+                        List(productos) { producto in
                             HStack {
                                 Image(producto.imagen) // Asegúrate de tener las imágenes en tu proyecto
                                     .resizable()
@@ -36,16 +36,17 @@ struct TiendaView: View {
                         }
                         .sheet(isPresented: $mostrarSheet) {
                             if let producto = productoSeleccionado {
-                                DetalleProductoView(producto: producto)
+                                DetalleProductoView(producto: producto, agregarAlCarrito: agregarAlCarrito)
                             } else {
                                 Text("Cargando...")
                             }
                         }
                         .navigationTitle("Tienda")
                 }
+        .onAppear {
+            loadProductos()
+        }
     }
-    
-    /*
     func loadProductos() {
             guard let url = Bundle.main.url(forResource: "productos", withExtension: "json") else {
                 print("No se pudo encontrar el archivo JSON.")
@@ -55,7 +56,7 @@ struct TiendaView: View {
             do {
                 let data = try Data(contentsOf: url)
                 let decoder = JSONDecoder()
-                let decodedProductos = try decoder.decode(ProductosResponse.self, from: data)
+                let decodedProductos = try decoder.decode(    .self, from: data)
                 
                 DispatchQueue.main.async {
                     self.productos = decodedProductos.Productos
@@ -65,7 +66,6 @@ struct TiendaView: View {
                 print("Error al decodificar el JSON: \(error)")
             }
         }
-    
     func agregarAlCarrito(producto: Producto) {
         guard let url = Bundle.main.url(forResource: "carrito", withExtension: "json") else {
             print("No se pudo encontrar el archivo carrito.json.")
@@ -73,17 +73,12 @@ struct TiendaView: View {
         }
         
         var carrito = [Producto]()
-        
+
         do {
             let data = try Data(contentsOf: url)
-            carrito = try JSONDecoder().decode([Producto].self, from: data)
-        } catch {
-            print("No se pudieron cargar los productos del carrito. Usando carrito vacío.")
-        }
-        
-        carrito.append(producto)
-        
-        do {
+            var carrito = try JSONDecoder().decode([Producto].self, from: data)
+            carrito.append(producto)
+
             let updatedData = try JSONEncoder().encode(carrito)
             try updatedData.write(to: url)
             print("✅ Producto añadido al carrito.")
@@ -91,5 +86,7 @@ struct TiendaView: View {
             print("❌ Error al añadir producto al carrito: \(error.localizedDescription)")
         }
     }
-     */
+}
+#Preview {
+    TiendaView()
 }
