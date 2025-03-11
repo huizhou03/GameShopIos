@@ -42,11 +42,11 @@ struct ContentView: View {
                 }
                 .tag(1)
             
-            /*TiendaView()
+            TiendaView()
                 .tabItem{
                     Label("Tienda", systemImage: "house")
                 }
-                .tag(2)*/
+                .tag(2)
             
             CarritoView()
                 .tabItem{
