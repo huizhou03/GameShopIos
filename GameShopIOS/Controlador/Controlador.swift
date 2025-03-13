@@ -11,6 +11,7 @@ class GestorDatos: ObservableObject {
     @Published var carrito = [ItemCarrito]()
     @Published var productos = [Producto]()
     @Published var pedidos = [Pedido]()
+    @Published var correo = ""
     
     
     init() {}
@@ -173,4 +174,14 @@ class GestorDatos: ObservableObject {
             print("Error al decodificar el JSON: \(error)")
         }
     }
+    
+    //funciones de login, perfil
+    func setCorreo(correoIntroducido: String){
+        correo = correoIntroducido
+    }
+    
+    func getCorreo() -> String {
+        return correo
+    }
+    
 }

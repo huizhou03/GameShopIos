@@ -3,14 +3,14 @@
         {
             "id":"1",
             "nombre":"Anton Luo",
-            "correo":"antonLuo15@gmail.com",
+            "correo":"antonluo15@gmail.com",
             "dirPostal":"28996",
             "newsletter": true
         },
         {
             "id":"2",
             "nombre":"Hui Zhou",
-            "correo":"huizhou.universidad@gmail.com",
+            "correo":"huizhou@gmail.com",
             "dirPostal":"28996",
             "newsletter": false
         }
