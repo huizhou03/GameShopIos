@@ -7,10 +7,10 @@
 //Tienda
 
 
-/*
 import SwiftUI
 
 struct TiendaView: View {
+    @State private var correo = "antonLuo15@gmail.com"
     @StateObject private var gestDatos = GestorDatos()
     @State private var productoSeleccionado: Producto? = nil
     @State private var mostrarSheet = false
@@ -41,16 +41,19 @@ struct TiendaView: View {
             }
             .sheet(isPresented: $mostrarSheet) {
                 if let producto = productoSeleccionado {
-                    DetalleProductoView(producto: producto)
+                    DetalleProductoView(producto: producto, correo: correo)
                 } else {
                     Text("Cargando...")
                 }
             }
             .navigationTitle("Tienda")
+            .onAppear{
+                gestDatos.loadProductos()
+            }
         }
     }
 }
 
 #Preview {
     TiendaView()
-}*/
+}

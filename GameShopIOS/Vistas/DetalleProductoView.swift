@@ -9,6 +9,7 @@ import SwiftUICore
 import SwiftUI
 struct DetalleProductoView: View {
     var producto: Producto
+    var correo: String
     @StateObject private var gestDatos = GestorDatos()
     @Environment(\.dismiss) var dismiss
 
@@ -33,7 +34,7 @@ struct DetalleProductoView: View {
                 .foregroundColor(.green)
 
             Button("Añadir al carrito") {
-                gestDatos.agregarProductoAlCarrito(producto: producto)
+                gestDatos.agregarProductoAlCarrito(producto: producto, correoUsuario: correo)
                 dismiss()
             }
             .padding()
