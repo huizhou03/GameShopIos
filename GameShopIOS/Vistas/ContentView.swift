@@ -22,7 +22,8 @@ struct ContentView: View {
 
 // Esta es la vista principal de la aplicación que contiene el TabView
 struct VistaPrincipal: View {
-    @Binding var nombreUsuario: String
+    //@Binding var nombreUsuario: String
+    let nombreUsuario: String (nombreUsuario: nombreUsuario)
     @State private var usuarioAutenticado: Usuario?
     
     var body: some View {
