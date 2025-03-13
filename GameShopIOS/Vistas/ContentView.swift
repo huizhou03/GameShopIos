@@ -7,36 +7,30 @@
 
 import SwiftUI
 
-/*//Perfil
-struct PerfilView: View {
-    var body: some View{
-        NavigationStack{
-            Image(systemName: "person.circle")
-            //...Añadimos código para editar aquí
-            Text("Página de Perfil")
-                .navigationTitle("Perfil")
-        }
-    }
-}*/
-
-//Pedidos
-struct PedidosView: View {
-    var body: some View{
-        NavigationStack{
-            Image(systemName: "person.circle")
-            //...Añadimos código para editar aquí
-            Text("Página de Pedidos")
-                .navigationTitle("Pedidos")
+struct ContentView: View {
+    @State private var estaAutenticado = false
+    @State private var nombreUsuario = ""
+    
+    var body: some View {
+        if estaAutenticado {
+            VistaPrincipal(nombreUsuario: nombreUsuario)
+        } else {
+            Login(estaAutenticado: $estaAutenticado, nombreUsuario: $nombreUsuario)
         }
     }
 }
+
 // Esta es la vista principal de la aplicación que contiene el TabView
-struct ContentView: View {
+struct VistaPrincipal: View {
+    //@Binding var nombreUsuario: String
+    let nombreUsuario: String (nombreUsuario: nombreUsuario)
+    @State private var usuarioAutenticado: Usuario?
+    
     var body: some View {
         //Barra de la parte inferior
         TabView {
             //Cuando hago click en perfil
-            Perfil()
+            Perfil(nombreUsuario: nombreUsuario)
                 .tabItem{
                     Label("Perfil", systemImage: "person.circle")
                 }
@@ -61,9 +55,39 @@ struct ContentView: View {
                 .tag(4)
         }
     }
+        
+/*// Cargar los datos del usuario desde el archivo usuarios.json
+    private func cargarDatosUsuario() {
+        if let usuario = GestorUsuarios.encontrarUsuario(por: nombreUsuario) {
+            usuarioAutenticado = usuario
+        }
+    }*/
+}
+
+/*//Perfil
+struct PerfilView: View {
+    var body: some View{
+        NavigationStack{
+            Image(systemName: "person.circle")
+            //...Añadimos código para editar aquí
+            Text("Página de Perfil")
+                .navigationTitle("Perfil")
+        }
+    }
+}*/
+
+//Pedidos
+struct PedidosView: View {
+    var body: some View{
+        NavigationStack{
+            Image(systemName: "person.circle")
+            //...Añadimos código para editar aquí
+            Text("Página de Pedidos")
+                .navigationTitle("Pedidos")
+        }
+    }
 }
 
 #Preview {
     ContentView()
 }
-
