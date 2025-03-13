@@ -13,7 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         if estaAutenticado {
-            VistaPrincipal(nombreUsuario: nombreUsuario)
+            //VistaPrincipal(nombreUsuario: nombreUsuario)
         } else {
             Login(estaAutenticado: $estaAutenticado, nombreUsuario: $nombreUsuario)
         }
@@ -23,18 +23,19 @@ struct ContentView: View {
 // Esta es la vista principal de la aplicación que contiene el TabView
 struct VistaPrincipal: View {
     //@Binding var nombreUsuario: String
-    let nombreUsuario: String (nombreUsuario: nombreUsuario)
-    @State private var usuarioAutenticado: Usuario?
+    //let nombreUsuario: String (nombreUsuario: nombreUsuario)
+    //@State private var usuarioAutenticado: Usuario?
     
     var body: some View {
         //Barra de la parte inferior
         TabView {
             //Cuando hago click en perfil
-            Perfil(nombreUsuario: nombreUsuario)
+            /*Perfil(nombreUsuario: nombreUsuario)
                 .tabItem{
                     Label("Perfil", systemImage: "person.circle")
                 }
                 .tag(1)
+             */
             
             TiendaView()
                 .tabItem{
@@ -75,18 +76,6 @@ struct PerfilView: View {
         }
     }
 }*/
-
-//Pedidos
-struct PedidosView: View {
-    var body: some View{
-        NavigationStack{
-            Image(systemName: "person.circle")
-            //...Añadimos código para editar aquí
-            Text("Página de Pedidos")
-                .navigationTitle("Pedidos")
-        }
-    }
-}
 
 #Preview {
     ContentView()

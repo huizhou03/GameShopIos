@@ -10,6 +10,7 @@ import Foundation
 class GestorDatos: ObservableObject {
     @Published var carrito = [ItemCarrito]()
     @Published var productos = [Producto]()
+    @Published var pedidos = [Pedido]()
     
     
     init() {}
@@ -18,13 +19,19 @@ class GestorDatos: ObservableObject {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
     
-    func obtenerURLArchivo() -> URL {
+    func obtenerURLCarrito() -> URL {
         obtenerUbicacionBase()
             .appendingPathComponent("carrito.json")
     }
+    func obtenerURLPedidos() -> URL {
+        obtenerUbicacionBase()
+            .appendingPathComponent("pedidos.json")
+    }
     
+    
+
     func cargarJSONCarrito(correoUsuario: String) {
-        let fileUbi = obtenerURLArchivo()
+        let fileUbi = obtenerURLCarrito()
         print("Ruta del archivo JSON: \(fileUbi.path)")
 
         // Verificar si el archivo existe
@@ -53,11 +60,8 @@ class GestorDatos: ObservableObject {
             print("Error al cargar el JSON: \(error)")
         }
     }
-
-
-    
     func guardarDatosJSONCarrito() {
-        let fileUbi = obtenerURLArchivo()
+        let fileUbi = obtenerURLCarrito()
         
         // Imprimir el contenido del carrito antes de guardarlo
         print("Carrito antes de guardar: \(self.carrito)")
@@ -75,8 +79,7 @@ class GestorDatos: ObservableObject {
             print("Error al guardar los datos: \(error)")
         }
     }
-    
-    
+
     func agregarProductoAlCarrito(producto: Producto, correoUsuario: String) {
         // Cargar el carrito desde el archivo (si no se ha cargado ya)
         if carrito.isEmpty {
@@ -96,12 +99,59 @@ class GestorDatos: ObservableObject {
         // Guardar los datos actualizados en el JSON solo si hay cambios
         guardarDatosJSONCarrito()
     }
-
-    
     func borrarProduto(at indexSet: IndexSet) {
         carrito.remove(atOffsets: indexSet)
         guardarDatosJSONCarrito()
     }
+    
+    
+    
+    
+    //Funciones para el apartado de pedidos
+    func cargarJSONPedidos() {
+    let fileUbi = obtenerURLPedidos()
+        do {
+            let data = try Data(contentsOf: fileUbi)
+            self.pedidos = try JSONDecoder().decode([Pedido].self, from: data)
+            }
+        catch {
+            print("Error al cargar los pedidos: \(error)")
+        }
+    }
+        
+    func guardarJSONPedidos() {
+        let fileUbi = obtenerURLPedidos()
+            do {
+                let encoder = JSONEncoder()
+                encoder.outputFormatting = .prettyPrinted
+                let data = try encoder.encode(self.pedidos)
+                try data.write(to: fileUbi, options: .atomic)
+            } catch {
+                print("Error al guardar los pedidos: \(error)")
+            }
+        }
+    func migrarCarritoAPedidos() {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let fechaActual = formatter.string(from: Date())
+
+            let nuevosPedidos = carrito.map { producto in
+                Pedido(
+                    correoUsuario: producto.correoUsuario,
+                    producto: producto.producto,
+                    cantidad: producto.cantidad,
+                    fecha: fechaActual
+                )
+            }
+
+            pedidos.append(contentsOf: nuevosPedidos)
+            carrito.removeAll()
+
+            guardarJSONPedidos()
+            guardarDatosJSONCarrito()
+        }
+    
+    
     
     //Funcion de la tienda
     func loadProductos() {
