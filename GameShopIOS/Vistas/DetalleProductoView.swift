@@ -29,17 +29,20 @@ struct DetalleProductoView: View {
                 .padding()
 
             Text("Precio: $\(producto.precio, specifier: "%.2f")")
-                .font(.headline)
+                .font(.system(size: 26))
                 .foregroundColor(.green)
+
 
             Button("Añadir al carrito") {
                 gestDatos.agregarProductoAlCarrito(producto: producto, correoUsuario: gestDatos.email)
                 dismiss()
             }
             .padding()
-            .background(Color.blue)
+            .font(.system(size: 24))
+            .frame(width: 300, height: 60)
+            .background(Color.red)
             .foregroundColor(.white)
-            .cornerRadius(10)
+            .cornerRadius(20)
         }
         .padding()
     }

@@ -179,8 +179,7 @@ class GestorDatos: ObservableObject {
     
     //Funcion de la tienda
     func loadProductos() {
-        guard let path = Bundle.main.path(forResource: "productos", ofType: "json"),
-              let url = URL(string: path) else {
+        guard let url = Bundle.main.url(forResource: "productos", withExtension: "json") else {
             print("No se pudo encontrar el archivo JSON.")
             return
         }
@@ -193,11 +192,11 @@ class GestorDatos: ObservableObject {
             DispatchQueue.main.async {
                 self.productos = decodedProductos.Productos
             }
-            
         } catch {
             print("Error al decodificar el JSON: \(error)")
         }
     }
+
 
     
     
