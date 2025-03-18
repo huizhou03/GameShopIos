@@ -22,7 +22,7 @@ struct CarritoView: View {
                         .foregroundColor(.white)
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(Color.blue)
+                        .background(Color.red)
                         .cornerRadius(10)
                 }
                 .padding()
