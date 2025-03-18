@@ -109,9 +109,11 @@ class GestorDatos: ObservableObject {
         // Guardar los datos actualizados en el JSON solo si hay cambios
         guardarDatosJSONCarrito()
     }
-    func borrarProduto(at indexSet: IndexSet) {
-        carrito.remove(atOffsets: indexSet)
-        guardarDatosJSONCarrito()
+    func borrarProduto(index: Int) {
+        if index < carrito.count {
+            carrito.remove(at: index)
+            guardarDatosJSONCarrito()
+        }
     }
     
     
@@ -177,7 +179,8 @@ class GestorDatos: ObservableObject {
     
     //Funcion de la tienda
     func loadProductos() {
-        guard let url = Bundle.main.url(forResource: "productos", withExtension: "json") else {
+        guard let path = Bundle.main.path(forResource: "productos", ofType: "json"),
+              let url = URL(string: path) else {
             print("No se pudo encontrar el archivo JSON.")
             return
         }
@@ -195,6 +198,7 @@ class GestorDatos: ObservableObject {
             print("Error al decodificar el JSON: \(error)")
         }
     }
+
     
     
     //Funciones para el apartado perfil
