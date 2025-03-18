@@ -11,8 +11,19 @@ class GestorDatos: ObservableObject {
     @Published var carrito = [ItemCarrito]()
     @Published var productos = [Producto]()
     @Published var pedidos = [Pedido]()
-    @Published var correo = ""
+    @Published var perfil = [Usuario]()
+    var correo: String = ""
     
+    var email: String {
+        get {
+            return correo
+        }
+        set(nuevoCorreo) {
+            if nuevoCorreo.contains("@") {
+                correo = nuevoCorreo
+            }
+        }
+    }
     
     init() {}
     
@@ -29,12 +40,10 @@ class GestorDatos: ObservableObject {
             .appendingPathComponent("pedidos.json")
     }
     
-    
-
     func cargarJSONCarrito(correoUsuario: String) {
         let fileUbi = obtenerURLCarrito()
         print("Ruta del archivo JSON: \(fileUbi.path)")
-
+        
         // Verificar si el archivo existe
         if !FileManager.default.fileExists(atPath: fileUbi.path) {
             if let bundleURL = Bundle.main.url(forResource: "carrito", withExtension: "json") {
@@ -50,13 +59,13 @@ class GestorDatos: ObservableObject {
             let data = try Data(contentsOf: fileUbi)
             let decoder = JSONDecoder()
             let carritoCompleto = try decoder.decode([ItemCarrito].self, from: data)
-
+            
             // Filtrar solo los productos del usuario
             self.carrito = carritoCompleto.filter { $0.correoUsuario == correoUsuario }
-
+            
             // Verificar si se cargan más productos
             print("Productos cargados para \(correoUsuario): \(self.carrito.count)")
-
+            
         } catch {
             print("Error al cargar el JSON: \(error)")
         }
@@ -66,21 +75,21 @@ class GestorDatos: ObservableObject {
         
         // Imprimir el contenido del carrito antes de guardarlo
         print("Carrito antes de guardar: \(self.carrito)")
-
+        
         do {
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
             let data = try encoder.encode(carrito)  // Asegúrate de que 'carrito' contiene todos los productos
-
+            
             // Imprimir los datos que se van a guardar
             print("Datos a guardar: \(String(data: data, encoding: .utf8) ?? "")")
-
+            
             try data.write(to: fileUbi, options: .atomicWrite)  // Escribe los datos al archivo
         } catch {
             print("Error al guardar los datos: \(error)")
         }
     }
-
+    
     func agregarProductoAlCarrito(producto: Producto, correoUsuario: String) {
         // Cargar el carrito desde el archivo (si no se ha cargado ya)
         if carrito.isEmpty {
@@ -109,48 +118,60 @@ class GestorDatos: ObservableObject {
     
     
     //Funciones para el apartado de pedidos
-    func cargarJSONPedidos() {
-    let fileUbi = obtenerURLPedidos()
+    func cargarJSONPedidos(correoUsuario: String) {
+        let fileUbi = obtenerURLPedidos()
+        print("Ruta del archivo JSON de pedidos: \(fileUbi.path)")
+        
         do {
             let data = try Data(contentsOf: fileUbi)
-            self.pedidos = try JSONDecoder().decode([Pedido].self, from: data)
-            }
-        catch {
+            let decoder = JSONDecoder()
+            let pedidosCompletos = try decoder.decode([Pedido].self, from: data)
+            
+            // Filtrar solo los pedidos del usuario
+            self.pedidos = pedidosCompletos.filter { $0.correoUsuario == correoUsuario }
+            
+            // Verificar cuántos pedidos se han cargado
+            print("Pedidos cargados para \(correoUsuario): \(self.pedidos.count)")
+            
+        } catch {
             print("Error al cargar los pedidos: \(error)")
         }
     }
-        
+    
+    
     func guardarJSONPedidos() {
         let fileUbi = obtenerURLPedidos()
-            do {
-                let encoder = JSONEncoder()
-                encoder.outputFormatting = .prettyPrinted
-                let data = try encoder.encode(self.pedidos)
-                try data.write(to: fileUbi, options: .atomic)
-            } catch {
-                print("Error al guardar los pedidos: \(error)")
-            }
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let data = try encoder.encode(self.pedidos)
+            try data.write(to: fileUbi, options: .atomic)
+        } catch {
+            print("Error al guardar los pedidos: \(error)")
         }
-    func migrarCarritoAPedidos() {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let fechaActual = formatter.string(from: Date())
-
-            let nuevosPedidos = carrito.map { producto in
-                Pedido(
-                    correoUsuario: producto.correoUsuario,
-                    producto: producto.producto,
-                    cantidad: producto.cantidad,
-                    fecha: fechaActual
-                )
-            }
-
-            pedidos.append(contentsOf: nuevosPedidos)
-            carrito.removeAll()
-
-            guardarJSONPedidos()
-            guardarDatosJSONCarrito()
+    }
+    func migrarCarritoAPedidos(correoUsuario: String) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let fechaActual = formatter.string(from: Date())
+        
+        print("correo usuario\(email) migrarCarrito a pedidos")
+        print("correo usuario \(correoUsuario) migrarCarrito a pedidos")
+        let nuevosPedidos = carrito.map { producto in
+            Pedido(
+                correoUsuario: producto.correoUsuario,
+                producto: producto.producto,
+                cantidad: producto.cantidad,
+                fecha: fechaActual
+            )
         }
+        
+        pedidos.append(contentsOf: nuevosPedidos)
+        carrito.removeAll()
+        
+        guardarJSONPedidos()
+        guardarDatosJSONCarrito()
+    }
     
     
     
@@ -175,13 +196,60 @@ class GestorDatos: ObservableObject {
         }
     }
     
-    //funciones de login, perfil
-    func setCorreo(correoIntroducido: String){
-        correo = correoIntroducido
+    
+    //Funciones para el apartado perfil
+    func obtenerURLPerfil() -> URL {
+        obtenerUbicacionBase()
+            .appendingPathComponent("usuarios.json")
     }
     
-    func getCorreo() -> String {
-        return correo
+    func cargarJSONUsuario(correoUsuario: String, usuarioModificado: Usuario?) {
+        let fileUbiPerfil = obtenerURLPerfil()
+        print("Ruta del archivo JSON: \(fileUbiPerfil.path)")
+        
+        // Verificar si el archivo existe, si no copiamos datos desde JSON del Bundle
+        if !FileManager.default.fileExists(atPath: fileUbiPerfil.path) {
+            if let bundleURL = Bundle.main.url(forResource: "usuarios", withExtension: "json") {
+                do {
+                    try FileManager.default.copyItem(at: bundleURL, to: fileUbiPerfil)
+                } catch {
+                    print("Error copiando el JSON desde el bundle: \(error)")
+                }
+            }
+        }
+        
+        do {
+            let data = try Data(contentsOf: fileUbiPerfil)
+            let decoder = JSONDecoder()
+            var response = try decoder.decode(UsuariosResponse.self, from: data)
+            
+            // Encontrar al usuario que se quiere modificar
+            if let index = response.Usuarios.firstIndex(where: { $0.correo.lowercased() == usuarioModificado?.correo.lowercased() }) {
+                
+                // Actualizar los datos del usuario
+                if let usuarioModificado = usuarioModificado {
+                    response.Usuarios[index] = usuarioModificado
+                    
+                    //Guardamos los nuevos datos en el JSON
+                    do {
+                        let encoder = JSONEncoder()
+                        encoder.outputFormatting = .prettyPrinted
+                        let encodedData = try encoder.encode(response)
+                        
+                        // Imprimir los datos que se van a guardar
+                        print("Datos a guardar: \(String(data: encodedData, encoding: .utf8) ?? "")")
+                        
+                        // Guardar los datos en Documents
+                        try encodedData.write(to: fileUbiPerfil)
+                        print("Datos guardados exitosamente en JSON")
+                        
+                    } catch {
+                        print("Error al guardar los datos en el archivo JSON: \(error)")
+                    }
+                }
+            }
+        }catch {
+            print("Error al cargar el JSON: \(error)")
+        }
     }
-    
 }

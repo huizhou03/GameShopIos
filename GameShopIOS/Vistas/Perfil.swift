@@ -8,8 +8,11 @@ struct Perfil: View {
     @State private var correo: String = ""
     @State private var suscrito: Bool = false
     @State private var usuarioAutenticado: Usuario? = nil
-    
-    @StateObject private var gestDatos = GestorDatos()
+    @State var mostrarAlerta: Bool = false
+    @State var modificarDatos: Bool = false
+    @Binding var estaAutenticado: Bool
+    @ObservedObject var gestDatos: GestorDatos 
+
 
     var body: some View {
         VStack {
@@ -28,20 +31,53 @@ struct Perfil: View {
             }
             
             Form {
-                Section(header: Text("Perfil")) {
+                Section(header: Text("Datos personales")) {
                     TextField("Nombre", text: $nombre)
+                        .disabled(!modificarDatos)
                     TextField("Dirección Postal", text: $direccionPostal)
+                        .disabled(!modificarDatos)
                     TextField("Correo", text: $correo)
                         .disabled(true)
+                    Toggle("Suscribirse a la Newsletter", isOn: $suscrito)
+                        .disabled(!modificarDatos)
                 }
                 
-                Toggle("Suscribirse a la Newsletter", isOn: $suscrito)
-                
-                Button(action: cerrarSesion) {
-                    Text("Cerrar sesión").foregroundColor(.red)
+                Button(action: {
+                    if modificarDatos {
+                        // Usamos la función cargarJSONUsuario para guardar los datos
+                        let usuarioModificado = Usuario(
+                            id: usuarioAutenticado?.id ?? "",
+                            nombre: nombre,
+                            correo: correo,
+                            dirPostal: direccionPostal,
+                            newsletter: suscrito
+                        )
+                        // Llamamos a la función para actualizar el JSON con los nuevos datos
+                        gestDatos.cargarJSONUsuario(correoUsuario: gestDatos.email, usuarioModificado: usuarioModificado)
+                  }
+                    modificarDatos.toggle()  // Cambia el estado de modificar
+                }) {
+                    Text(modificarDatos ? "Guardar cambios" : "Modificar datos")
+                        .foregroundColor(.blue)
                 }
-            }
-        }
+
+                
+                Button(action: { mostrarAlerta = true }) {
+                   Text("Cerrar sesión").foregroundColor(.red)
+               }
+               .alert(isPresented: $mostrarAlerta) {
+                   Alert(
+                       title: Text("Cerrar sesión"),
+                       message: Text("¿Estás seguro de que quieres cerrar sesión?"),
+                       primaryButton: .default(Text("Sí, cerrar sesión")) {
+                           estaAutenticado = false
+                           print("Usuario ha cerrado sesión")
+                       },
+                       secondaryButton: .cancel()
+                   )
+               }
+           }
+       }
         .navigationTitle("PERFIL")
         .onAppear {
             print("Correo del usuario: \(gestDatos.correo)")
@@ -49,20 +85,17 @@ struct Perfil: View {
         }
     }
     
-    func cerrarSesion() {
-        print("Usuario ha cerrado sesión")
-    }
-    
     // Función para cargar los datos del usuario desde el archivo JSON
     private func cargarDatosUsuario() {
-        if let usuario = encontrarUsuarioPorCorreo(correo: gestDatos.correo) {
-            usuarioAutenticado = usuario
-            nombre = usuario.nombre
-            direccionPostal = usuario.dirPostal
-            correo = usuario.correo
-            suscrito = usuario.newsletter
+        if let usuario = encontrarUsuarioPorCorreo(correo: gestDatos.email) {
+                usuarioAutenticado = usuario
+                nombre = usuario.nombre
+                direccionPostal = usuario.dirPostal
+                correo = usuario.correo
+                suscrito = usuario.newsletter
         }
     }
+    
     
     // Función para buscar al usuario por correo
     private func encontrarUsuarioPorCorreo(correo: String) -> Usuario? {
@@ -118,5 +151,5 @@ struct ElegirImagen: UIViewControllerRepresentable {
 }
 
 #Preview {
-    Perfil()
+    Perfil(estaAutenticado: .constant(true), gestDatos: GestorDatos())
 }

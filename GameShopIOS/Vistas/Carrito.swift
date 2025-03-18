@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CarritoView: View {
-    @StateObject private var gestDatos = GestorDatos()
+    @ObservedObject var gestDatos: GestorDatos
     
     var body: some View {
         NavigationView {
@@ -35,7 +35,7 @@ struct CarritoView: View {
                 
                 // Botón para migrar carrito a pedidos
                 Button(action: {
-                    gestDatos.migrarCarritoAPedidos()
+                    gestDatos.migrarCarritoAPedidos(correoUsuario: gestDatos.email)
                 }) {
                     Text("Finalizar compra")
                         .font(.headline)
@@ -49,7 +49,7 @@ struct CarritoView: View {
             }
             .navigationTitle("Carrito")
             .onAppear {
-                gestDatos.cargarJSONCarrito(correoUsuario: "antonLuo15@gmail.com")
+                gestDatos.cargarJSONCarrito(correoUsuario: gestDatos.email)
             }
             .onDisappear {
                 gestDatos.guardarDatosJSONCarrito()
@@ -59,7 +59,7 @@ struct CarritoView: View {
 }
 
 #Preview {
-    CarritoView()
+    CarritoView(gestDatos: GestorDatos())
 }
 
 

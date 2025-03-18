@@ -15,5 +15,5 @@ struct Usuario:Codable, Identifiable{
 }
 
 struct UsuariosResponse: Codable {
-    let Usuarios: [Usuario]
+    var Usuarios: [Usuario]
 }

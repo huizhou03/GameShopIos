@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PedidosView: View {
-    @StateObject private var gestDatos = GestorDatos()
+    @ObservedObject var gestDatos: GestorDatos
     
     var body: some View {
         NavigationStack {
@@ -40,13 +40,13 @@ struct PedidosView: View {
             }
             .navigationTitle("Pedidos")
             .onAppear {
-                gestDatos.cargarJSONPedidos()
+                gestDatos.cargarJSONPedidos(correoUsuario: gestDatos.email)
             }
         }
     }
 }
 
 #Preview {
-    PedidosView()
+    PedidosView(gestDatos: GestorDatos())
 }
 

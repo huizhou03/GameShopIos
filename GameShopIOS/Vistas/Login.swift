@@ -5,7 +5,7 @@ struct Login: View {
     @Binding var nombreUsuario: String
     @State private var contrasena = ""
     @State private var sesionFallida: Bool = false
-    @StateObject private var gestDatos = GestorDatos()
+    @StateObject var gestDatos: GestorDatos
     
     //Array
     struct UsuariosLogin: Codable {
@@ -15,36 +15,41 @@ struct Login: View {
     
     //Array de usuarios
     @State var usuariosArray: [UsuariosLogin] = [
-        UsuariosLogin(usuario: "huizhou.universidad@gmail.com", password: "123456"),
+        UsuariosLogin(usuario: "huizhou@gmail.com", password: "123456"),
         UsuariosLogin(usuario: "antonluo15@gmail.com", password: "123456")]
     
     var body: some View {
         VStack {
-            Text("Login")
-                .font(.system(size: 70, weight: .bold, design: .rounded))
+            Image("logotipo_Logo")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 120)
+                .padding(.top, 10)
+            
+            Text("Bienvenido a SwitchHub")
+                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .foregroundColor(.blue)
             
             Form {
                 Section {
-                    TextField("Username", text: $nombreUsuario)
+                    TextField("Correo electrónico", text: $nombreUsuario)
                         .keyboardType(.emailAddress)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                         .font(.headline)
                         .padding()
                         .background(Color.gray.opacity(0.2))
-                        .cornerRadius(6)
-                        .padding(.horizontal, 60)
-                        .foregroundStyle(Color.black)
+                        .cornerRadius(8)
+                        .padding(.horizontal, 2)
                     
-                    SecureField("Password", text: $contrasena)
+                    SecureField("Contraseña", text: $contrasena)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                         .font(.headline)
                         .padding()
                         .background(Color.gray.opacity(0.2))
-                        .cornerRadius(6)
-                        .padding(.horizontal, 60)
-                        .foregroundStyle(Color.black)
+                        .cornerRadius(8)
+                        .padding(.horizontal, 2)
                 }
                 
                 if sesionFallida {
@@ -55,14 +60,20 @@ struct Login: View {
                 
                 Section {
                     Button("Iniciar sesión") {
-                        gestDatos.setCorreo(correoIntroducido: nombreUsuario)
+                        gestDatos.email = nombreUsuario
+                        print("El correo introducido del login es \(nombreUsuario)")
                         autenticar()
+                        resetearUsuario()
                     }
-                    .foregroundStyle(Color.green)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .padding(.horizontal, 30)
                 }
             }
         }
-        .navigationTitle("Iniciar sesión")
     }
     
     private func autenticar() {
@@ -78,9 +89,13 @@ struct Login: View {
             sesionFallida = true
         }
     }
+    private func resetearUsuario() {
+        nombreUsuario = ""
+        contrasena = ""
+    }
 }
 
 #Preview {
-    Login(estaAutenticado: .constant(false), nombreUsuario: .constant(""))
+    Login(estaAutenticado: .constant(false), nombreUsuario: .constant(""), gestDatos: GestorDatos())
 }
 
